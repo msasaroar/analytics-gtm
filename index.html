@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic File Viewer-GTM</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            margin: 10px;
+        }
+
+        nav a {
+            margin: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #333;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        main {
+            background-color: #f4f4f4;
+            height: 500px;
+            overflow: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        function loadContent(type) {
+            const main = document.querySelector("main");
+
+            if (type === "html") {
+                main.innerHTML = '<iframe src="sample.html" width="100%" height="100%" style="border:none;"></iframe>';
+            } else if (type === "text") {
+                fetch("sample.txt")
+                    .then(response => response.text())
+                    .then(data => {
+                        main.innerHTML = `<pre>${data}</pre>`;
+                    })
+                    .catch(error => {
+                        main.innerHTML = "<p>Error loading text file.</p>";
+                    });
+            } else if (type === "image") {
+                main.innerHTML = '<div style="overflow: auto; width: 100%; height: 100%;"><img src="sample.png" alt="Sample Image" style="display:block; max-width:none;"></div>';
+            } else if (type === "pdf") {
+                main.innerHTML = '<iframe src="sample.pdf" width="100%" height="100%" style="border:none;"></iframe>';
+            } else if (type === "spreadsheet") {
+                main.innerHTML = '<iframe src="sample.ods" width="100%" height="100%" style="border:none;"></iframe>';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Dynamic File Viewer</h1>
+        <nav>
+            <a href="#" onclick="loadContent('html')">View Sample HTML</a>
+            <a href="#" onclick="loadContent('text')">View Sample Text</a>
+            <a href="#" onclick="loadContent('image')">View Sample Image</a>
+            <a href="#" onclick="loadContent('pdf')">View Sample PDF</a>
+            <a href="#" onclick="loadContent('spreadsheet')">View Sample Spreadsheet</a>			
+        </nav>
+    </header>
+
+    <main>
+        <p>Click a link above to load content here.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dynamic File Viewer. All rights reserved.</p>
+    </footer>
+</body>
+</html>
